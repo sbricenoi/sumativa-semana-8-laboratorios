@@ -1,0 +1,76 @@
+w
+
+
+
+
+
+
+
+
+
+
+
+Semana 5
+Desarrollo Full Stack III (DSY2205)
+
+
+Instrucciones Específicas
+
+ 
+Descripción de la actividad
+En esta quinta semana realizarán la actividad sumativa de la Experiencia 2, de manera individual, llamada "Desarrollando nuestro proyecto bajo lineamientos empresariales", deberás continuar con el desarrollo de la Actividad sumativa 1 (Experiencia 1) para implementar un patrón de diseño al microservicio, desarrollar la parte FrontEnd del caso dado, todo esto siguiendo los lineamientos para la construcción del arquetipo y el versionado, luego podrás subirlo a un Cloud. Como segunda parte deberás hacer una presentación de lo realizado en el desarrollo.
+
+Instrucciones específicas 
+
+Parte I: Documentación 
+
+1.	Deberás entregar en un archivo comprimido (.rar o .zip) la aplicación creada. El comprimido deberá contener el código fuente de la aplicación (FrontEnd en Angular, Microservicios desarrollados, script de la BD Oracle, código fuente de tu arquetipo).
+2.	La aplicación FrontEnd creada debe cumplir con los siguientes aspectos: 
+a.	La interfaz gráfica desarrollada debe adaptarse a mínimo 3 tamaños de pantallas diferentes para su correcta visualización en dispositivos móviles basada en el GRID de 12 columnas.
+b.	Uso de HTML, CSS, Bootstrap y JS o JQuery para la construcción del front-end en sus versiones más actuales recordando que el Framework de desarrollo debe ser Angular.
+c.	Manejo y organización del trabajo grupal utilizando herramientas colaborativas y de repositorios en GIT.
+d.	Deberán estar construidas todas las pantallas y los formularios con sus respectivas validaciones.
+ 
+e.	Para la manipulación de la información deberán realizarlo mediante variables de Angular como listas, arreglos o colecciones.
+f.	El desarrollo FrontEnd debe realizarse mediante un patrón de diseño acorde a los requerimientos del caso asignado.
+3.	Para la creación del BackEnd los microservicios creados deben cumplir con los siguientes aspectos:
+a.	Deben ser desarrollados bajo el Framework Spring con spring boot.
+b.	Deben comunicarse mediante CRUD con una base de Datos diseñada en Oracle Cloud.
+c.	Manejo y organización del trabajo utilizando herramientas colaborativas y de repositorios en GIT.
+d.	Deberán cumplir con todos los requisitos de usuarios y devolver la información mediante APIs en formato JSON para los endpoints.
+e.	Deben manipular la información mediante consultas con POSTMAN, como para obtener y guardar información en la Base de Datos generada en la misma.
+f.	Deben estar construidos mediante el arquetipo diseñado para que cumpla con los requerimientos solicitados por el caso asignado.
+4.	 Para la creación de la aplicación FullStack deberán tener en cuenta lo siguiente en el caso asignado: 
+
+Caso 
+Gestión de Laboratorios y Resultados de Análisis (deben tener al menos 3 laboratorios diferentes, los cuales quedan a su completa elección). Puedes guiarte por páginas ya desarrolladas. Para delimitar su aplicación y el alcance de esta, es necesario que el caso que seleccionen cumpla con las siguientes características generales: 
+•	La aplicación debe contar con al menos 2 roles o tipos de usuarios que posean privilegios diferentes y que sean manipulados por la aplicación. Es importante destacar que pueden tener más roles si desean y aclarar que pueden existir varios usuarios de la aplicación con el mismo rol o tipo de usuario asignado. 
+ 
+•	Para el diseño de la aplicación FrontEnd deberás elegir los colores, logos, nombre e imágenes a implementar en su desarrollo. Puedes guiarse de páginas ya existentes, pero sin dejar de lado su originalidad. También pueden usar cualquier herramienta de diseño de imágenes como Photoshop, gimp, illustrator o que estén en la web. 
+•	Todas deben contar con las siguientes páginas:  
+·	Inicio de sesión. 
+·	Registro de usuarios. 
+·	Recuperar contraseña.  
+·	Modificación de perfil.  
+•	Adicionalmente, deberás generar páginas internas para dar respuesta a las funcionalidades del sistema.
+•	En cuanto a las contraseñas, deberás proporcionar al menos 4 validaciones de seguridad de estas para protección tales como longitud mínima, uso de caracteres especiales, uso de números y letras, longitud máxima o alguna otra que considere esencial. 
+•	En cuanto a los formularios, todos deben tener sus validaciones correspondientes para cada campo, puedes guiarte de cualquier aplicación donde se haya registrado para usar las validaciones necesarias. 
+•	No se debe implementar sistemas de pagos como webPay u otros, si el sistema lo requiere simular un pago del cliente con páginas que solo reflejen que el pago del monto asociado se ha realizado con éxito. Tampoco involucrar métodos de pago.
+•	En cuanto a los microservicios se deben desarrollar los siguientes:
+·	Un microservicio para el control de usuarios (crear, modificar, eliminar) e inicio de sesión.
+·	Un microservicio para el registro y asignación de laboratorios para la realización de análisis clínicos.
+·	Un microservicio para la gestión de resultados de análisis, incluyendo su almacenamiento y consulta.
+ 
+5.	Deberán usar Docker para el Cloud de su desarrollo. En cuanto a los microservicios deben usar los mismos 2 seleccionados en la semana 2 (evaluación sumativa de la experiencia de aprendizaje 1). En cuanto al desarrollo Angular deben manejar la información mediante variables haciendo uso de listas, arreglos o colecciones. Es importante destacar que en esta evaluación no es necesario que se comuniquen el FrontEnd con el BackEnd, sino que deben funcionar por separado.
+
+Para la Parte II: Presentación
+Para la presentación de su desarrollo FullStack deberán usar la herramienta de Kaltura, mostrando su funcionamiento y comunicación tanto del FrontEnd como del BackEnd (mediante el uso de la herramienta Postman) de manera independiente en el Cloud Docker, así como sus características, diseño, funcionalidades, patrones y arquetipos desarrollados. Es importante destacar que deben mostrar en tiempo real todas las funcionalidades requeridas del desarrollo donde se cumplan todos los requerimientos solicitados del caso.  
+Esta grabación deberá tener mínimo 7 minutos y máximo 10 minutos.
+Recuerda que puedes descargar el instructivo de Kaltura en la guía de la semana. 
+Adjunta el video al momento de subir tu actividad. 
+
+Importante
+Las temáticas desarrolladas deben cumplir con las indicaciones entregadas por el Profesor de la asignatura. Consulta con él si tienes dudas. 
+Considera los siguientes entregables al momento de rendir tu evaluación: 
+·	Zip o rar del desarrollo FullStack.
+·	Comparte el link de Git y la grabación de la presentación en el AVA, al momento de adjuntar el ZIP.  

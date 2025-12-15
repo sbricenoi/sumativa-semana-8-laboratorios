@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # ========================================
+  # BASE DE DATOS ORACLE
+  # ========================================
+  oracle-db:
+    image: container-registry.oracle.com/database/express:latest
+    container_name: oracle-laboratorios
+    platform: linux/amd64
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    environment:
+      - ORACLE_PWD=Oracle123
+      - ORACLE_CHARACTERSET=AL32UTF8
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      # Scripts de inicialización comentados temporalmente
+      # - ./scripts:/docker-entrypoint-initdb.d/startup
+    networks:
+      - laboratorios-network
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  # ========================================
+  # MICROSERVICIOS Y FRONTEND
+  # ========================================
+  # Los microservicios y el frontend se ejecutan LOCALMENTE
+  # para facilitar el desarrollo y evitar problemas de compatibilidad.
+  # 
+  # Para ejecutarlos:
+  # 1. Microservicios: cd microservicio-X && mvn spring-boot:run
+  # 2. Frontend: cd frontend-laboratorios && npm start
+
+# ========================================
+# VOLÚMENES
+# ========================================
+volumes:
+  oracle-data:
+    driver: local
+
+# ========================================
+# REDES
+# ========================================
+networks:
+  laboratorios-network:
+    driver: bridge
+
+# ========================================
+# INSTRUCCIONES DE USO
+# ========================================
+# 1. Construir las imágenes:
+#    docker-compose build
+#
+# 2. Levantar todos los servicios:
+#    docker-compose up -d
+#
+# 3. Ver logs de todos los servicios:
+#    docker-compose logs -f
+#
+# 4. Ver logs de un servicio específico:
+#    docker-compose logs -f microservicio-usuarios
+#
+# 5. Verificar estado de los servicios:
+#    docker-compose ps
+#
+# 6. Detener todos los servicios:
+#    docker-compose down
+#
+# 7. Detener y eliminar volúmenes:
+#    docker-compose down -v
+#
+# 8. Acceso a los servicios:
+#    - Microservicio Usuarios: http://localhost:8081/api/usuarios
+#    - Microservicio Laboratorios: http://localhost:8082/api/laboratorios
+#    - Microservicio Resultados: http://localhost:8083/api/resultados
+#    - Oracle Database: localhost:1521 (SID: XE)
+#
+# 9. Para reconstruir un servicio específico:
+#    docker-compose build microservicio-usuarios
+#    docker-compose up -d microservicio-usuarios

@@ -1,0 +1,46 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: microservicio-resultados
+  
+  datasource:
+    # CONEXIÓN A ORACLE CLOUD AUTONOMOUS DATABASE
+    url: jdbc:oracle:thin:@laboratoriosdb_high?TNS_ADMIN=/app/wallet
+    username: ADMIN
+    password: ${ORACLE_PASSWORD}
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 300000
+      max-lifetime: 600000
+      data-source-properties:
+        oracle.net.tns_admin: /app/wallet
+        oracle.net.wallet_location: (SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=/app/wallet)))
+  
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+
+logging:
+  level:
+    com.duoc.laboratorio.resultados: INFO
+    org.hibernate.SQL: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+app:
+  nombre: Sistema de Gestión de Laboratorios - Microservicio de Resultados (Production)
+  version: 1.0.0
+

@@ -1,0 +1,648 @@
+{
+  "info": {
+    "name": "Sistema de Gestión de Laboratorios - API",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "description": "Colección de Postman para probar los microservicios de Gestión de Laboratorios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Microservicio Usuarios",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/health",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "health"]
+            }
+          }
+        },
+        {
+          "name": "Registrar Usuario - Admin",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Pérez\",\n  \"email\": \"juan.perez@lab.cl\",\n  \"password\": \"password123\",\n  \"rol\": \"ADMINISTRADOR\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/registro",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "registro"]
+            }
+          }
+        },
+        {
+          "name": "Registrar Usuario - Paciente",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Laura\",\n  \"apellido\": \"Torres\",\n  \"email\": \"laura.torres@email.cl\",\n  \"password\": \"password123\",\n  \"rol\": \"PACIENTE\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/registro",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "registro"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@lab.cl\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/login",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "login"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todos los Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Usuario por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/1",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Filtrar Usuarios por Rol",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/rol/PACIENTE",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "rol", "PACIENTE"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/buscar?texto=Maria",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "buscar"],
+              "query": [{"key": "texto", "value": "Maria"}]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"María Actualizada\",\n  \"apellido\": \"González\",\n  \"email\": \"maria.gonzalez@email.cl\",\n  \"rol\": \"PACIENTE\",\n  \"activo\": 1\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/2",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "2"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Usuario (Lógico)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_USUARIOS}}/api/usuarios/5",
+              "host": ["{{BASE_URL_USUARIOS}}"],
+              "path": ["api", "usuarios", "5"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Microservicio Laboratorios",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/health",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "health"]
+            }
+          }
+        },
+        {
+          "name": "Crear Laboratorio",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Laboratorio Pruebas Medicas\",\n  \"direccion\": \"Av. Las Condes 12345, Santiago\",\n  \"telefono\": \"+56-2-2999-8888\",\n  \"email\": \"contacto@labpruebas.cl\",\n  \"especialidad\": \"Análisis General\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todos los Laboratorios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Laboratorio por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/1",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Listar Laboratorios Activos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/activos",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "activos"]
+            }
+          }
+        },
+        {
+          "name": "Buscar Laboratorios por Nombre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/buscar?nombre=Central",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "buscar"],
+              "query": [{"key": "nombre", "value": "Central"}]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Laboratorio",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Laboratorio Central Actualizado\",\n  \"direccion\": \"Av. Libertador Bernardo O'Higgins 1234, Santiago\",\n  \"telefono\": \"+56-2-2345-6789\",\n  \"email\": \"contacto@labcentral.cl\",\n  \"especialidad\": \"Análisis General y Especializado\",\n  \"activo\": 1\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/1",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "1"]
+            }
+          }
+        },
+        {
+          "name": "Asignar Análisis a Laboratorio",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idTipoAnalisis\": 2,\n  \"disponible\": 1\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/1/analisis",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "1", "analisis"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Análisis Asignados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/1/analisis",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "1", "analisis"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Laboratorio",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/laboratorios/5",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "laboratorios", "5"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tipos de Análisis",
+      "item": [
+        {
+          "name": "Crear Tipo de Análisis",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Examen de Sangre Completo\",\n  \"descripcion\": \"Análisis completo de sangre con hemograma y bioquímica\",\n  \"precio\": 35000,\n  \"tiempoEntregaDias\": 2\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/analisis",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "analisis"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todos los Análisis",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/analisis",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "analisis"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Análisis por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/analisis/1",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "analisis", "1"]
+            }
+          }
+        },
+        {
+          "name": "Listar Análisis Activos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/analisis/activos",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "analisis", "activos"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Tipo de Análisis",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Hemograma Completo Actualizado\",\n  \"descripcion\": \"Análisis completo de células sanguíneas con valores actualizados\",\n  \"precio\": 18000,\n  \"tiempoEntregaDias\": 1,\n  \"activo\": 1\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/analisis/1",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "analisis", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Tipo de Análisis",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/analisis/10",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "analisis", "10"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Citas",
+      "item": [
+        {
+          "name": "Crear Cita",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idPaciente\": 2,\n  \"idLaboratorio\": 1,\n  \"idTipoAnalisis\": 1,\n  \"fechaCita\": \"2025-11-10T09:00:00\",\n  \"observaciones\": \"Ayuno de 12 horas\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todas las Citas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Cita por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas/1",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas", "1"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Citas por Paciente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas/paciente/2",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas", "paciente", "2"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Citas por Laboratorio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas/laboratorio/1",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas", "laboratorio", "1"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Próximas Citas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas/laboratorio/1/proximas",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas", "laboratorio", "1", "proximas"]
+            }
+          }
+        },
+        {
+          "name": "Filtrar Citas por Estado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas/estado/PROGRAMADA",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas", "estado", "PROGRAMADA"]
+            }
+          }
+        },
+        {
+          "name": "Cambiar Estado de Cita",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas/1/estado?estado=CONFIRMADA",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas", "1", "estado"],
+              "query": [{"key": "estado", "value": "CONFIRMADA"}]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Cita",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_LABORATORIOS}}/api/citas/10",
+              "host": ["{{BASE_URL_LABORATORIOS}}"],
+              "path": ["api", "citas", "10"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Microservicio Resultados",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/health",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "health"]
+            }
+          }
+        },
+        {
+          "name": "Crear Resultado",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idCita\": 1,\n  \"idLaboratorista\": 3,\n  \"archivoPdf\": \"/resultados/2025/11/resultado_001.pdf\",\n  \"observaciones\": \"Hemograma completo dentro de parámetros normales\",\n  \"estado\": \"COMPLETADO\",\n  \"valoresMedidos\": \"{\\\"globulos_rojos\\\": \\\"5.0 millones/uL\\\", \\\"globulos_blancos\\\": \\\"7500 /uL\\\", \\\"hemoglobina\\\": \\\"14.0 g/dL\\\", \\\"hematocrito\\\": \\\"42%\\\", \\\"plaquetas\\\": \\\"245000 /uL\\\"}\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados"]
+            }
+          }
+        },
+        {
+          "name": "Listar Todos los Resultados",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Resultado por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/1",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "1"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Resultado por Cita",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/cita/1",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "cita", "1"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Resultados por Laboratorista",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/laboratorista/3",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "laboratorista", "3"]
+            }
+          }
+        },
+        {
+          "name": "Obtener Resultados por Estado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/estado/COMPLETADO",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "estado", "COMPLETADO"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Resultado",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"archivoPdf\": \"/resultados/2025/11/resultado_001_actualizado.pdf\",\n  \"observaciones\": \"Resultado actualizado - Valores normales confirmados\",\n  \"estado\": \"REVISADO\",\n  \"valoresMedidos\": \"{\\\"globulos_rojos\\\": \\\"5.0 millones/uL\\\", \\\"globulos_blancos\\\": \\\"7500 /uL\\\", \\\"hemoglobina\\\": \\\"14.0 g/dL\\\", \\\"revision\\\": \\\"Aprobado por médico\\\"}\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/1",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "1"]
+            }
+          }
+        },
+        {
+          "name": "Cambiar Estado del Resultado",
+          "request": {
+            "method": "PATCH",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"REVISADO\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/1/estado",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "1", "estado"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Resultado",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL_RESULTADOS}}/api/resultados/10",
+              "host": ["{{BASE_URL_RESULTADOS}}"],
+              "path": ["api", "resultados", "10"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL_USUARIOS",
+      "value": "http://localhost:8081",
+      "type": "string"
+    },
+    {
+      "key": "BASE_URL_LABORATORIOS",
+      "value": "http://localhost:8082",
+      "type": "string"
+    },
+    {
+      "key": "BASE_URL_RESULTADOS",
+      "value": "http://localhost:8083",
+      "type": "string"
+    }
+  ]
+}
+

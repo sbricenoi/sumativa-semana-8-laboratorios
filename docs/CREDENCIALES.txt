@@ -1,0 +1,108 @@
+# ============================================
+# CREDENCIALES DE ACCESO - LABORATORIOS
+# ============================================
+
+## BASE DE DATOS ORACLE
+
+**Usuario BD:** LABUSER
+**Password BD:** OraclePassword123
+**TNS:** laboratorios_db
+**Puerto:** 1521
+
+## USUARIOS DE PRUEBA - FRONTEND
+
+### ADMINISTRADOR
+- Email: admin@lab.cl
+- Password: cualquiera (modo demo)
+- Rol: ADMINISTRADOR
+- Permisos: Acceso completo al sistema
+
+### PACIENTE  
+- Email: maria@email.cl
+- Password: cualquiera (modo demo)
+- Rol: PACIENTE
+- Permisos: Ver sus propias citas y resultados
+
+### LABORATORISTA
+- Email: carlos@lab.cl
+- Password: cualquiera (modo demo)
+- Rol: LABORATORISTA
+- Permisos: Gestión de resultados y análisis
+
+### MÉDICO
+- Email: ana@hospital.cl
+- Password: cualquiera (modo demo)
+- Rol: MEDICO
+- Permisos: Ver pacientes, solicitar análisis
+
+## ACCESO A SERVICIOS
+
+### Frontend Angular
+- URL: http://localhost:4200
+- Tipo: Aplicación web SPA
+- Estado: Datos simulados (LocalStorage)
+
+### Microservicio Usuarios
+- URL: http://localhost:8081
+- Endpoints: /api/usuarios/*
+- Health: http://localhost:8081/actuator/health
+
+### Microservicio Laboratorios
+- URL: http://localhost:8082
+- Endpoints: /api/laboratorios/*, /api/citas/*, /api/tipos-analisis/*
+- Health: http://localhost:8082/actuator/health
+
+### Microservicio Resultados
+- URL: http://localhost:8083
+- Endpoints: /api/resultados/*
+- Health: http://localhost:8083/actuator/health
+
+## POSTMAN
+
+Archivo: postman/Laboratorios-API.postman_collection.json
+- 30+ requests organizados en carpetas
+- Variables de entorno pre-configuradas
+- Ejemplos de respuesta incluidos
+
+## NOTAS IMPORTANTES
+
+1. **Frontend NO conectado al Backend**: Según requisitos, ambos funcionan independientemente
+2. **Datos Mock en Frontend**: Usa MockDataService para simular datos
+3. **Backend con BD Real**: Oracle Cloud Database
+4. **Password de Demo**: En frontend acepta cualquier password (modo demo)
+5. **Java Version**: Requiere Java 17 para compilar los microservicios
+
+## DOCKER
+
+Iniciar todo el sistema:
+```bash
+docker-compose up -d
+```
+
+Ver logs:
+```bash
+docker-compose logs -f [nombre_servicio]
+```
+
+Detener todo:
+```bash
+docker-compose down
+```
+
+## ESTRUCTURA DE CARPETAS
+
+- /microservicio-usuarios: Spring Boot - Gestión de usuarios
+- /microservicio-laboratorios: Spring Boot - Gestión de laboratorios y citas
+- /microservicio-resultados: Spring Boot - Gestión de resultados
+- /frontend-laboratorios: Angular 17 - Interfaz web
+- /arquetipo-microservicio: Maven Archetype para nuevos microservicios
+- /postman: Colección de pruebas
+- /scripts: Scripts SQL de inicialización
+- /docs: Documentación técnica
+
+## CONTACTO
+
+Proyecto: Sistema de Gestión de Laboratorios Clínicos
+Asignatura: Desarrollo Full Stack III (DSY2205)
+Semana: 5
+

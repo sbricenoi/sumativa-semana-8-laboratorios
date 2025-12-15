@@ -1,0 +1,445 @@
+# ============================================
+# INSTRUCCIONES DE INSTALACIÓN Y EJECUCIÓN
+# ============================================
+
+## REQUISITOS PREVIOS
+
+### Software Necesario:
+1. **Docker Desktop** (versión 20.10 o superior)
+   - Descarga: https://www.docker.com/products/docker-desktop
+
+2. **Java 17** (para compilación de microservicios)
+   - Descarga: https://www.oracle.com/java/technologies/downloads/#java17
+   
+3. **Node.js 18+** y **npm** (para desarrollo frontend)
+   - Descarga: https://nodejs.org/
+
+4. **Postman** (para pruebas de API)
+   - Descarga: https://www.postman.com/downloads/
+
+5. **Git** (opcional, para clonar repositorio)
+   - Descarga: https://git-scm.com/downloads
+
+### Verificar Instalaciones:
+```bash
+docker --version          # Docker version 20.10+
+java -version             # Java 17
+node --version            # Node 18+
+npm --version             # npm 8+
+```
+
+---
+
+## OPCIÓN 1: EJECUCIÓN RÁPIDA CON DOCKER (RECOMENDADA)
+
+Esta opción levanta todo el sistema con un solo comando.
+
+### Paso 1: Descomprimir el Proyecto
+```bash
+# Extraer el archivo ZIP en una carpeta de tu elección
+unzip Laboratorios-FullStack.zip
+cd "Sumativa 2 Semana 5"
+```
+
+### Paso 2: Levantar Todos los Servicios
+```bash
+# Construir y levantar todos los contenedores
+docker-compose up -d
+
+# Ver logs en tiempo real (opcional)
+docker-compose logs -f
+```
+
+### Paso 3: Verificar que Todo Esté Funcionando
+```bash
+# Verificar contenedores activos
+docker ps
+
+# Deberías ver 5 contenedores:
+# - oracle-db
+# - microservicio-usuarios
+# - microservicio-laboratorios
+# - microservicio-resultados
+# - frontend-laboratorios
+```
+
+### Paso 4: Acceder a los Servicios
+
+**Frontend Angular:**
+- URL: http://localhost:4200
+- Usuarios de prueba: Ver archivo CREDENCIALES.txt
+
+**Backend APIs:**
+- Usuarios: http://localhost:8081/api/usuarios
+- Laboratorios: http://localhost:8082/api/laboratorios
+- Resultados: http://localhost:8083/api/resultados
+
+**Base de Datos Oracle:**
+- Puerto: 1521
+- Usuario: LABUSER
+- Password: OraclePassword123
+
+### Paso 5: Probar con Postman
+
+1. Abrir Postman
+2. Importar colección: `postman/Laboratorios-API.postman_collection.json`
+3. Ejecutar requests en las carpetas correspondientes
+
+### Paso 6: Detener el Sistema
+```bash
+# Detener todos los servicios
+docker-compose down
+
+# Detener y eliminar volúmenes (limpieza completa)
+docker-compose down -v
+```
+
+---
+
+## OPCIÓN 2: EJECUCIÓN MANUAL (DESARROLLO)
+
+Para desarrollo local sin Docker.
+
+### A. Levantar Base de Datos Oracle
+```bash
+cd "Sumativa 2 Semana 5"
+docker-compose up -d oracle-db
+
+# Esperar ~30 segundos para que Oracle inicie
+docker logs oracle-db
+```
+
+### B. Ejecutar Script SQL de Inicialización
+```bash
+# Conectarse a Oracle
+docker exec -it oracle-db sqlplus LABUSER/OraclePassword123@//localhost:1521/XEPDB1
+
+# Ejecutar el script
+@/opt/oracle/scripts/startup/init.sql
+
+# Verificar tablas
+SELECT table_name FROM user_tables;
+```
+
+### C. Compilar y Ejecutar Microservicios
+
+#### Microservicio Usuarios (Puerto 8081)
+```bash
+cd microservicio-usuarios
+mvn clean package -DskipTests
+java -jar target/usuarios-0.0.1-SNAPSHOT.jar
+```
+
+#### Microservicio Laboratorios (Puerto 8082)
+```bash
+cd microservicio-laboratorios
+mvn clean package -DskipTests
+java -jar target/laboratorios-0.0.1-SNAPSHOT.jar
+```
+
+#### Microservicio Resultados (Puerto 8083)
+```bash
+cd microservicio-resultados
+mvn clean package -DskipTests
+java -jar target/resultados-0.0.1-SNAPSHOT.jar
+```
+
+### D. Ejecutar Frontend Angular
+```bash
+cd frontend-laboratorios
+
+# Instalar dependencias (solo primera vez)
+npm install
+
+# Ejecutar en modo desarrollo
+npm start
+
+# Abrir navegador en http://localhost:4200
+```
+
+---
+
+## OPCIÓN 3: USAR ARQUETIPO MAVEN (CREAR NUEVO MICROSERVICIO)
+
+El proyecto incluye un arquetipo Maven para generar nuevos microservicios.
+
+### Paso 1: Instalar el Arquetipo
+```bash
+cd arquetipo-microservicio
+mvn clean install
+```
+
+### Paso 2: Generar Nuevo Microservicio
+```bash
+cd ..
+mvn archetype:generate \
+  -DarchetypeGroupId=com.duoc.laboratorio \
+  -DarchetypeArtifactId=microservicio-arquetipo \
+  -DarchetypeVersion=1.0.0 \
+  -DgroupId=com.duoc.laboratorio \
+  -DartifactId=microservicio-nuevo \
+  -Dversion=0.0.1-SNAPSHOT \
+  -Dpackage=com.duoc.laboratorio.nuevo \
+  -DinteractiveMode=false
+```
+
+### Paso 3: Personalizar el Nuevo Microservicio
+```bash
+cd microservicio-nuevo
+
+# El arquetipo genera:
+# - Configuración de Oracle Wallet
+# - Dockerfile multi-stage
+# - Estructura de paquetes
+# - Exception handlers
+# - ApiResponse DTO
+# - application.yml
+```
+
+---
+
+## SOLUCIÓN DE PROBLEMAS COMUNES
+
+### Problema 1: Error de Compilación Java
+**Error:** `TypeTag :: UNKNOWN` o `ExceptionInInitializerError`
+
+**Solución:**
+```bash
+# Verificar versión de Java
+java -version
+
+# Debe ser Java 17. Si no, cambiar JAVA_HOME
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)  # macOS
+# O en Windows: set JAVA_HOME=C:\Program Files\Java\jdk-17
+
+# Limpiar caché de Maven
+mvn clean
+rm -rf ~/.m2/repository/*
+```
+
+### Problema 2: Puerto Ya en Uso
+**Error:** `Bind for 0.0.0.0:8081 failed: port is already allocated`
+
+**Solución:**
+```bash
+# Encontrar proceso usando el puerto
+lsof -i :8081  # macOS/Linux
+netstat -ano | findstr :8081  # Windows
+
+# Matar el proceso o cambiar puerto en application.yml
+```
+
+### Problema 3: Oracle No Inicia
+**Error:** `ORA-12514: TNS:listener does not currently know of service`
+
+**Solución:**
+```bash
+# Verificar logs de Oracle
+docker logs oracle-db
+
+# Esperar más tiempo (Oracle puede tardar 1-2 minutos)
+# Verificar estado del servicio
+docker exec oracle-db bash -c "lsnrctl status"
+```
+
+### Problema 4: Frontend No Carga
+**Error:** Página en blanco o error 404
+
+**Solución:**
+```bash
+# Limpiar caché de npm
+rm -rf node_modules package-lock.json
+npm cache clean --force
+npm install
+
+# Verificar puerto 4200 libre
+lsof -i :4200
+```
+
+### Problema 5: Wallet de Oracle No Encontrado
+**Error:** `TNS:could not resolve the connect identifier`
+
+**Solución:**
+- Verificar que la carpeta Wallet esté en la ubicación correcta
+- Actualizar TNS_ADMIN en application.yml
+- Para desarrollo local, usar `application.yml` en lugar de `application-cloud.yml`
+
+---
+
+## ESTRUCTURA DE DIRECTORIOS
+
+```
+Sumativa 2 Semana 5/
+├── docker-compose.yml              # Orquestación de todos los servicios
+├── CREDENCIALES.txt                # Credenciales de acceso
+├── INSTRUCCIONES.txt               # Este archivo
+├── README.md                       # Documentación principal
+├── PROGRESO_FINAL.md              # Resumen del desarrollo
+├── texto.txt                       # Requisitos originales
+│
+├── docs/                           # Documentación técnica
+│   └── arquitectura.md
+│
+├── scripts/                        # Scripts SQL
+│   └── init.sql                    # Inicialización de BD
+│
+├── postman/                        # Colección de pruebas
+│   └── Laboratorios-API.postman_collection.json
+│
+├── microservicio-usuarios/         # MS Gestión de usuarios
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── src/
+│
+├── microservicio-laboratorios/     # MS Gestión de laboratorios
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── src/
+│
+├── microservicio-resultados/       # MS Gestión de resultados
+│   ├── Dockerfile
+│   ├── pom.xml
+│   └── src/
+│
+├── frontend-laboratorios/          # Frontend Angular 17
+│   ├── Dockerfile
+│   ├── nginx.conf
+│   ├── package.json
+│   └── src/
+│
+└── arquetipo-microservicio/        # Arquetipo Maven
+    ├── pom.xml
+    └── src/
+```
+
+---
+
+## FLUJO DE PRUEBAS RECOMENDADO
+
+### 1. Verificar Backend con Postman
+
+**Microservicio Usuarios:**
+```
+✓ POST /api/usuarios/registro - Registrar nuevo usuario
+✓ POST /api/usuarios/login - Iniciar sesión
+✓ GET /api/usuarios - Listar usuarios
+✓ GET /api/usuarios/{id} - Obtener usuario por ID
+```
+
+**Microservicio Laboratorios:**
+```
+✓ GET /api/laboratorios - Listar laboratorios
+✓ POST /api/citas - Crear nueva cita
+✓ GET /api/citas/paciente/{id} - Ver citas de paciente
+✓ GET /api/tipos-analisis - Listar tipos de análisis
+```
+
+**Microservicio Resultados:**
+```
+✓ POST /api/resultados - Crear resultado
+✓ GET /api/resultados/cita/{id} - Ver resultados por cita
+✓ PUT /api/resultados/{id}/estado - Cambiar estado
+```
+
+### 2. Verificar Frontend
+
+**Flujo de Login:**
+1. Ir a http://localhost:4200
+2. Usar email: admin@lab.cl (cualquier password)
+3. Verificar redirección a dashboard
+4. Verificar navbar con nombre de usuario
+
+**Flujo de Registro:**
+1. Click en "Regístrate aquí"
+2. Llenar formulario completo
+3. Verificar validaciones de contraseña (6 reglas)
+4. Enviar y verificar mensaje de éxito
+
+**Flujo de Editar Perfil:**
+1. Desde dashboard, ir a "Mi Perfil"
+2. Editar información en tab "Datos Personales"
+3. Cambiar contraseña en tab "Seguridad"
+4. Guardar cambios
+
+**Responsive Design:**
+1. Abrir DevTools (F12)
+2. Toggle Device Toolbar (Ctrl+Shift+M)
+3. Probar en: Mobile (375px), Tablet (768px), Desktop (1200px)
+4. Verificar que grid de 12 columnas se adapta
+
+---
+
+## CHECKLIST DE VERIFICACIÓN
+
+Antes de entregar, verificar:
+
+### Backend
+- [ ] Oracle DB levantado y con datos
+- [ ] 3 microservicios funcionando (8081, 8082, 8083)
+- [ ] Postman con 30+ requests exitosos
+- [ ] Health checks respondiendo
+- [ ] Logs sin errores críticos
+
+### Frontend
+- [ ] Login funcional
+- [ ] Registro con 5+ validaciones de password
+- [ ] Recuperar password (3 pasos)
+- [ ] Editar perfil (2 tabs)
+- [ ] Dashboard diferenciado por rol
+- [ ] Responsive en 3 tamaños
+- [ ] Bootstrap aplicado correctamente
+
+### Docker
+- [ ] docker-compose up sin errores
+- [ ] 5 contenedores activos
+- [ ] Redes creadas correctamente
+- [ ] Volúmenes persistentes
+
+### Documentación
+- [ ] README.md completo
+- [ ] CREDENCIALES.txt con accesos
+- [ ] INSTRUCCIONES.txt detalladas
+- [ ] arquitectura.md actualizada
+- [ ] Comentarios en código
+
+### Entregables
+- [ ] Código fuente completo
+- [ ] Colección Postman
+- [ ] Scripts SQL
+- [ ] Dockerfiles
+- [ ] Video presentación (7-10 min)
+
+---
+
+## RECURSOS ADICIONALES
+
+### Enlaces Útiles:
+- Spring Boot Docs: https://spring.io/projects/spring-boot
+- Angular Docs: https://angular.io/docs
+- Docker Compose: https://docs.docker.com/compose/
+- Oracle Cloud DB: https://www.oracle.com/cloud/
+- Bootstrap 5: https://getbootstrap.com/docs/5.3/
+
+### Patrones Implementados:
+- MVC (Model-View-Controller)
+- DTO (Data Transfer Object)
+- Repository Pattern
+- Service Layer
+- Exception Handling Centralizado
+- Reactive Forms (Angular)
+
+---
+
+## CONTACTO Y SOPORTE
+
+Para dudas sobre el proyecto:
+- Revisar documentación en /docs/
+- Verificar logs: `docker-compose logs -f [servicio]`
+- Consultar PROGRESO_FINAL.md
+
+---
+
+**¡Proyecto listo para ejecutar y demostrar! 🚀**
+
+*Última actualización: Noviembre 2025*
+
