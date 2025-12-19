@@ -1,0 +1,228 @@
+<div class="registro-container py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-8">
+        <div class="card-custom shadow-lg p-4 fade-in">
+          <!-- Título -->
+          <div class="text-center mb-4">
+            <i class="bi bi-person-plus-fill text-secondary-custom" style="font-size: 3rem;"></i>
+            <h2 class="mt-3">Crear Cuenta</h2>
+            <p class="text-muted">Completa tus datos para registrarte</p>
+          </div>
+
+          <!-- Formulario -->
+          <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <!-- Nombre -->
+              <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre *</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  class="form-control"
+                  formControlName="nombre"
+                  placeholder="Tu nombre"
+                  [class.is-invalid]="f['nombre'].invalid && f['nombre'].touched"
+                />
+                <div class="invalid-feedback-custom" *ngIf="f['nombre'].invalid && f['nombre'].touched">
+                  <span *ngIf="f['nombre'].errors?.['required']">El nombre es obligatorio</span>
+                  <span *ngIf="f['nombre'].errors?.['minlength']">Mínimo 2 caracteres</span>
+                </div>
+              </div>
+
+              <!-- Apellido -->
+              <div class="col-md-6 mb-3">
+                <label for="apellido" class="form-label">Apellido *</label>
+                <input
+                  type="text"
+                  id="apellido"
+                  class="form-control"
+                  formControlName="apellido"
+                  placeholder="Tu apellido"
+                  [class.is-invalid]="f['apellido'].invalid && f['apellido'].touched"
+                />
+                <div class="invalid-feedback-custom" *ngIf="f['apellido'].invalid && f['apellido'].touched">
+                  <span *ngIf="f['apellido'].errors?.['required']">El apellido es obligatorio</span>
+                  <span *ngIf="f['apellido'].errors?.['minlength']">Mínimo 2 caracteres</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Email -->
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  formControlName="email"
+                  placeholder="tu&#64;email.cl"
+                  [class.is-invalid]="f['email'].invalid && f['email'].touched"
+                />
+                <div class="invalid-feedback-custom" *ngIf="f['email'].invalid && f['email'].touched">
+                  <span *ngIf="f['email'].errors?.['required']">El email es obligatorio</span>
+                  <span *ngIf="f['email'].errors?.['email']">Email inválido</span>
+                </div>
+              </div>
+
+              <!-- Teléfono -->
+              <div class="col-md-6 mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input
+                  type="tel"
+                  id="telefono"
+                  class="form-control"
+                  formControlName="telefono"
+                  placeholder="+56912345678"
+                  [class.is-invalid]="f['telefono'].invalid && f['telefono'].touched"
+                />
+                <div class="invalid-feedback-custom" *ngIf="f['telefono'].invalid && f['telefono'].touched">
+                  <span>Formato de teléfono inválido</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña *</label>
+              <div class="input-group">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  id="password"
+                  class="form-control"
+                  formControlName="password"
+                  placeholder="Mínimo 8 caracteres"
+                  [class.is-invalid]="f['password'].invalid && f['password'].touched"
+                />
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="togglePasswordVisibility()"
+                >
+                  <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </button>
+              </div>
+              
+              <!-- Indicador de Fortaleza -->
+              <div class="mt-2" *ngIf="f['password'].value">
+                <div class="password-strength" [class]="passwordStrength.strength"></div>
+                <small class="text-muted">
+                  Fortaleza:
+                  <span [class]="'fw-bold ' + (passwordStrength.strength === 'strong' ? 'text-success' : passwordStrength.strength === 'medium' ? 'text-warning' : 'text-danger')">
+                    {{ passwordStrength.strength === 'strong' ? 'Fuerte' : passwordStrength.strength === 'medium' ? 'Media' : 'Débil' }}
+                  </span>
+                </small>
+              </div>
+
+              <!-- Validaciones de Contraseña -->
+              <div class="mt-2" *ngIf="f['password'].touched">
+                <small class="d-block" [class.text-success]="!f['password'].errors?.['minLength']" [class.text-danger]="f['password'].errors?.['minLength']">
+                  <i [class]="!f['password'].errors?.['minLength'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                  Mínimo 8 caracteres
+                </small>
+                <small class="d-block" [class.text-success]="!f['password'].errors?.['maxLength']" [class.text-danger]="f['password'].errors?.['maxLength']">
+                  <i [class]="!f['password'].errors?.['maxLength'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                  Máximo 20 caracteres
+                </small>
+                <small class="d-block" [class.text-success]="!f['password'].errors?.['hasNumber']" [class.text-danger]="f['password'].errors?.['hasNumber']">
+                  <i [class]="!f['password'].errors?.['hasNumber'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                  Al menos un número
+                </small>
+                <small class="d-block" [class.text-success]="!f['password'].errors?.['hasSpecial']" [class.text-danger]="f['password'].errors?.['hasSpecial']">
+                  <i [class]="!f['password'].errors?.['hasSpecial'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                  Al menos un carácter especial (!&#64;#$%^&*...)
+                </small>
+                <small class="d-block" [class.text-success]="!f['password'].errors?.['hasUpperCase']" [class.text-danger]="f['password'].errors?.['hasUpperCase']">
+                  <i [class]="!f['password'].errors?.['hasUpperCase'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                  Al menos una mayúscula
+                </small>
+                <small class="d-block" [class.text-success]="!f['password'].errors?.['hasLowerCase']" [class.text-danger]="f['password'].errors?.['hasLowerCase']">
+                  <i [class]="!f['password'].errors?.['hasLowerCase'] ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'"></i>
+                  Al menos una minúscula
+                </small>
+              </div>
+            </div>
+
+            <!-- Confirmar Contraseña -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmar Contraseña *</label>
+              <div class="input-group">
+                <input
+                  [type]="showConfirmPassword ? 'text' : 'password'"
+                  id="confirmPassword"
+                  class="form-control"
+                  formControlName="confirmPassword"
+                  placeholder="Repite tu contraseña"
+                  [class.is-invalid]="f['confirmPassword'].invalid && f['confirmPassword'].touched"
+                />
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="toggleConfirmPasswordVisibility()"
+                >
+                  <i [class]="showConfirmPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback-custom" *ngIf="f['confirmPassword'].invalid && f['confirmPassword'].touched">
+                <span *ngIf="f['confirmPassword'].errors?.['required']">Debes confirmar tu contraseña</span>
+                <span *ngIf="f['confirmPassword'].errors?.['passwordMismatch']">Las contraseñas no coinciden</span>
+              </div>
+            </div>
+
+            <!-- Rol -->
+            <div class="mb-3">
+              <label for="rol" class="form-label">Tipo de Usuario *</label>
+              <select id="rol" class="form-select" formControlName="rol">
+                <option value="PACIENTE">Paciente</option>
+                <option value="MEDICO">Médico</option>
+                <option value="LABORATORISTA">Laboratorista</option>
+              </select>
+            </div>
+
+            <!-- Términos y Condiciones -->
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="aceptaTerminos" formControlName="aceptaTerminos">
+              <label class="form-check-label" for="aceptaTerminos">
+                Acepto los <a href="#" class="fw-bold">términos y condiciones</a> *
+              </label>
+              <div class="invalid-feedback-custom" *ngIf="f['aceptaTerminos'].invalid && f['aceptaTerminos'].touched">
+                Debes aceptar los términos y condiciones
+              </div>
+            </div>
+
+            <!-- Mensajes -->
+            <div class="alert alert-danger" *ngIf="error">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              {{ error }}
+            </div>
+            <div class="alert alert-success" *ngIf="success">
+              <i class="bi bi-check-circle-fill me-2"></i>
+              {{ success }}
+            </div>
+
+            <!-- Botón Submit -->
+            <button type="submit" class="btn btn-secondary-custom w-100 mb-3" [disabled]="loading">
+              <span *ngIf="!loading">
+                <i class="bi bi-person-plus me-2"></i>
+                Registrarse
+              </span>
+              <span *ngIf="loading">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Registrando...
+              </span>
+            </button>
+
+            <!-- Link a Login -->
+            <div class="text-center">
+              <p class="mb-0">
+                ¿Ya tienes cuenta?
+                <a routerLink="/login" class="fw-bold">Inicia sesión aquí</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

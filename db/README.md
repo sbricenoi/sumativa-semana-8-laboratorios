@@ -236,3 +236,4 @@ ALTER SEQUENCE SEQ_USUARIO RESTART START WITH 1;
 
 Para problemas con la base de datos, contactar al equipo de desarrollo.
 
+

@@ -57,3 +57,4 @@ echo "   • microservicio-laboratorios/target/"
 echo "   • microservicio-resultados/target/"
 echo ""
 
+

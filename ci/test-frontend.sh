@@ -39,3 +39,4 @@ echo ""
 echo -e "${YELLOW}📊 Reporte de cobertura: frontend-laboratorios/coverage/index.html${NC}"
 echo ""
 
+

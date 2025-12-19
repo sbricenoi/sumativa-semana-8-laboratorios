@@ -159,3 +159,4 @@ brew install node
 - Requieren permisos de ejecución (`chmod +x *.sh`)
 - Los logs se guardan automáticamente en `/logs/`
 
+

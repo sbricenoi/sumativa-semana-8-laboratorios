@@ -58,3 +58,4 @@ echo "   • microservicio-laboratorios/target/site/jacoco/index.html"
 echo "   • microservicio-resultados/target/site/jacoco/index.html"
 echo ""
 
+

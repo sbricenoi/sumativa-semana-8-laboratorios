@@ -1,0 +1,98 @@
+<div class="perfil-container py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-8">
+        <div class="card-custom shadow p-4">
+          <h2 class="mb-4">
+            <i class="bi bi-person-circle me-2"></i>
+            Mi Perfil
+          </h2>
+
+          <!-- Tabs -->
+          <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="activeTab === 'info'" (click)="setActiveTab('info')" style="cursor: pointer;">
+                <i class="bi bi-info-circle me-2"></i>
+                Información Personal
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="activeTab === 'password'" (click)="setActiveTab('password')" style="cursor: pointer;">
+                <i class="bi bi-key me-2"></i>
+                Cambiar Contraseña
+              </a>
+            </li>
+          </ul>
+
+          <!-- Mensajes -->
+          <div class="alert alert-success" *ngIf="success">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{ success }}
+          </div>
+          <div class="alert alert-danger" *ngIf="error">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{ error }}
+          </div>
+
+          <!-- Alerta si no hay usuario -->
+          <div class="alert alert-warning" *ngIf="!currentUser">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            No hay sesión iniciada. Por favor, <a routerLink="/login">inicia sesión</a>.
+          </div>
+
+          <!-- Tab Información Personal -->
+          <div *ngIf="activeTab === 'info' && currentUser">
+            <form [formGroup]="perfilForm" (ngSubmit)="onSubmitPerfil()">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" id="nombre" class="form-control" formControlName="nombre" />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="apellido" class="form-label">Apellido</label>
+                  <input type="text" id="apellido" class="form-control" formControlName="apellido" />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" formControlName="email" />
+                <small class="text-muted">El email no puede ser modificado</small>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Rol</label>
+                <input type="text" class="form-control" formControlName="rol" />
+                <small class="text-muted">El rol es asignado por un administrador</small>
+              </div>
+              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                <i class="bi bi-save me-2"></i>
+                {{ loading ? 'Guardando...' : 'Guardar Cambios' }}
+              </button>
+            </form>
+          </div>
+
+          <!-- Tab Cambiar Contraseña -->
+          <div *ngIf="activeTab === 'password' && currentUser">
+            <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+              <div class="mb-3">
+                <label for="passwordActual" class="form-label">Contraseña Actual</label>
+                <input type="password" id="passwordActual" class="form-control" formControlName="passwordActual" />
+              </div>
+              <div class="mb-3">
+                <label for="passwordNueva" class="form-label">Nueva Contraseña</label>
+                <input type="password" id="passwordNueva" class="form-control" formControlName="passwordNueva" />
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" />
+              </div>
+              <button type="submit" class="btn btn-warning" [disabled]="loading">
+                <i class="bi bi-key me-2"></i>
+                {{ loading ? 'Cambiando...' : 'Cambiar Contraseña' }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

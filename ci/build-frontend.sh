@@ -48,3 +48,4 @@ echo ""
 echo -e "${YELLOW}📌 Build generado en: frontend-laboratorios/dist/${NC}"
 echo ""
 
+

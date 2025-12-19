@@ -99,3 +99,4 @@ echo ""
 echo -e "${RED}⚠️  Para detener todos los servicios, ejecuta: ./ci/stop-all.sh${NC}"
 echo ""
 
+

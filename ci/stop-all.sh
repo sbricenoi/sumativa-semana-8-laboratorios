@@ -68,3 +68,4 @@ echo -e "${GREEN}║  ✅ Todos los servicios han sido detenidos               �
 echo -e "${GREEN}╚══════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
+

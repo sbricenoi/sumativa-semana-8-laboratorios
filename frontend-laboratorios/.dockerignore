@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.angular/
+.vscode/
+.git/
+.gitignore
+*.md
+*.log
+coverage/
+.DS_Store
+*.spec.ts
+

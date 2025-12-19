@@ -1,0 +1,102 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow">
+  <div class="container-fluid">
+    <!-- Logo y Nombre -->
+    <a class="navbar-brand" href="#" routerLink="/dashboard">
+      <i class="bi bi-hospital-fill me-2"></i>
+      <span class="d-none d-md-inline">LabConnect</span>
+    </a>
+
+    <!-- Botón para mobile -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Nav items -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-1"></i>
+            Dashboard
+          </a>
+        </li>
+      </ul>
+
+      <!-- Usuario -->
+      <div class="dropdown">
+        <button
+          class="btn btn-light dropdown-toggle"
+          type="button"
+          id="userDropdown"
+          data-bs-toggle="dropdown"
+        >
+          <i class="bi bi-person-circle me-1"></i>
+          {{ currentUser?.nombre }} {{ currentUser?.apellido }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><h6 class="dropdown-header">{{ currentUser?.rol }}</h6></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" routerLink="/perfil">
+              <i class="bi bi-person me-2"></i>
+              Mi Perfil
+            </a>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item text-danger" (click)="logout()" style="cursor: pointer;">
+              <i class="bi bi-box-arrow-right me-2"></i>
+              Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenido Principal -->
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Footer -->
+<footer class="footer-custom mt-auto">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5><i class="bi bi-hospital-fill me-2"></i>LabConnect</h5>
+        <p class="text-light">Sistema de Gestión de Laboratorios Clínicos</p>
+      </div>
+      <div class="col-md-4">
+        <h6>Enlaces</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-light">Términos y Condiciones</a></li>
+          <li><a href="#" class="text-light">Política de Privacidad</a></li>
+          <li><a href="#" class="text-light">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6>Contacto</h6>
+        <p class="text-light mb-1">
+          <i class="bi bi-envelope me-2"></i>
+          info&#64;labconnect.cl
+        </p>
+        <p class="text-light">
+          <i class="bi bi-telephone me-2"></i>
+          +56-2-2345-6789
+        </p>
+      </div>
+    </div>
+    <hr class="bg-light" />
+    <div class="text-center text-light">
+      <small>&copy; 2025 LabConnect. Todos los derechos reservados.</small>
+    </div>
+  </div>
+</footer>

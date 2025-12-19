@@ -1,0 +1,49 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: microservicio-laboratorios
+  
+  datasource:
+    # CONEXIÓN A ORACLE CLOUD AUTONOMOUS DATABASE
+    url: jdbc:oracle:thin:@laboratoriosdb_high?TNS_ADMIN=/Users/sbriceno/oracle_wallet
+    username: ADMIN
+    password: Oracle123#Lab
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 300000
+      max-lifetime: 600000
+      data-source-properties:
+        oracle.net.tns_admin: /Users/sbriceno/oracle_wallet
+        oracle.net.wallet_location: (SOURCE=(METHOD=FILE)(METHOD_DATA=(DIRECTORY=/Users/sbriceno/oracle_wallet)))
+  
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+logging:
+  level:
+    com.duoc.laboratorio.laboratorios: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+app:
+  nombre: Sistema de Gestión de Laboratorios - Microservicio de Laboratorios (Oracle Cloud)
+  version: 1.0.0
+

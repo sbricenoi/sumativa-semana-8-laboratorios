@@ -1,0 +1,61 @@
+# ========================================
+# CONFIGURACIÓN PARA ORACLE CLOUD
+# ========================================
+# Este archivo es para conectarse a Oracle Autonomous Database en la nube
+# 
+# INSTRUCCIONES:
+# 1. Descargar el Wallet de Oracle Cloud
+# 2. Descomprimirlo en: ~/oracle_wallet
+# 3. Reemplazar RUTA_AL_WALLET con tu ruta real
+# 4. Ejecutar con: mvn spring-boot:run -Dspring.profiles.active=cloud
+
+server:
+  port: 8082
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: microservicio-laboratorios
+  
+  datasource:
+    # CONEXIÓN A ORACLE CLOUD AUTONOMOUS DATABASE
+    # Reemplaza 'laboratoriosdb_high' con el TNS name de tu BD
+    # Reemplaza la ruta del wallet con tu ruta real
+    url: jdbc:oracle:thin:@laboratoriosdb_high?TNS_ADMIN=/Users/RUTA_AL_WALLET/oracle_wallet
+    username: ADMIN
+    password: Oracle123#Lab
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 300000
+      max-lifetime: 600000
+  
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+logging:
+  level:
+    com.duoc.laboratorio.laboratorios: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+app:
+  nombre: Sistema de Gestión de Laboratorios - Microservicio de Laboratorios (Oracle Cloud)
+  version: 1.0.0
+  cloud: true
+
+

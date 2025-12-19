@@ -1,0 +1,133 @@
+<div class="dashboard-container py-5">
+  <div class="container">
+    <!-- Bienvenida -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card-custom p-4 bg-gradient" [class]="'bg-gradient-' + getRoleColor()">
+          <div class="d-flex align-items-center">
+            <i [class]="'bi ' + getRoleIcon() + ' text-white'" style="font-size: 4rem;"></i>
+            <div class="ms-4 text-white">
+              <h2 class="mb-1">¡Bienvenido, {{ currentUser?.nombre }}!</h2>
+              <p class="mb-0 opacity-75">Rol: {{ currentUser?.rol }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estadísticas según Rol -->
+    <div class="row g-4 mb-4">
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-custom p-3 text-center">
+          <i class="bi bi-calendar-check text-primary" style="font-size: 2.5rem;"></i>
+          <h5 class="mt-3 mb-1">Citas</h5>
+          <h3 class="mb-0">{{ currentUser?.rol === 'PACIENTE' ? '2' : '15' }}</h3>
+          <small class="text-muted">
+            {{ currentUser?.rol === 'PACIENTE' ? 'Programadas' : 'Esta semana' }}
+          </small>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-custom p-3 text-center">
+          <i class="bi bi-file-medical text-success" style="font-size: 2.5rem;"></i>
+          <h5 class="mt-3 mb-1">Resultados</h5>
+          <h3 class="mb-0">{{ currentUser?.rol === 'PACIENTE' ? '1' : '8' }}</h3>
+          <small class="text-muted">
+            {{ currentUser?.rol === 'PACIENTE' ? 'Disponible' : 'Completados' }}
+          </small>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-custom p-3 text-center">
+          <i class="bi bi-hospital text-info" style="font-size: 2.5rem;"></i>
+          <h5 class="mt-3 mb-1">Laboratorios</h5>
+          <h3 class="mb-0">4</h3>
+          <small class="text-muted">Activos</small>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <div class="card-custom p-3 text-center">
+          <i class="bi bi-clipboard2-pulse text-warning" style="font-size: 2.5rem;"></i>
+          <h5 class="mt-3 mb-1">Análisis</h5>
+          <h3 class="mb-0">6</h3>
+          <small class="text-muted">Disponibles</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido específico por rol -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card-custom p-4">
+          <h4 class="mb-4">
+            <i class="bi bi-activity me-2"></i>
+            Resumen de Actividades
+          </h4>
+
+          <!-- Paciente -->
+          <div *ngIf="currentUser?.rol === 'PACIENTE'">
+            <p class="lead">Tus próximas citas y resultados disponibles:</p>
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>Hemograma Completo</strong> - LabCorp Chile
+                  <br />
+                  <small class="text-muted">25 de Noviembre, 09:00</small>
+                </div>
+                <span class="badge bg-warning">Programada</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>Perfil Tiroideo</strong> - Clínica Alemana Laboratorios
+                  <br />
+                  <small class="text-muted">26 de Noviembre, 10:30</small>
+                </div>
+                <span class="badge bg-info">Confirmada</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Médico -->
+          <div *ngIf="currentUser?.rol === 'MEDICO'">
+            <p class="lead">Pacientes y resultados pendientes de revisión:</p>
+            <div class="alert alert-info">
+              <i class="bi bi-info-circle me-2"></i>
+              Tienes 3 resultados pendientes de revisión.
+            </div>
+          </div>
+
+          <!-- Laboratorista -->
+          <div *ngIf="currentUser?.rol === 'LABORATORISTA'">
+            <p class="lead">Citas del día y resultados por procesar:</p>
+            <div class="alert alert-primary">
+              <i class="bi bi-clipboard-check me-2"></i>
+              5 citas programadas para hoy. 2 resultados listos para cargar.
+            </div>
+          </div>
+
+          <!-- Administrador -->
+          <div *ngIf="currentUser?.rol === 'ADMINISTRADOR'">
+            <p class="lead">Estado general del sistema:</p>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6>Usuarios Registrados</h6>
+                  <h3 class="text-primary">5</h3>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="border rounded p-3">
+                  <h6>Citas Este Mes</h6>
+                  <h3 class="text-success">23</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

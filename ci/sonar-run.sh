@@ -104,3 +104,4 @@ echo ""
 echo -e "${YELLOW}💡 Nota: Reemplaza 'squ_YOUR_TOKEN_HERE' con tu token real de SonarQube${NC}"
 echo ""
 
+
